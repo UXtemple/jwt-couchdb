@@ -1,0 +1,47 @@
+{
+  "name": "jwt-couchdb",
+  "description": "JWT endpoint to authenticate users and create JSON Web Tokens out of the CouchDB's session API",
+  "main": "cjs.js",
+  "bin": {
+    "jwt-couchdb": "cjs.js"
+  },
+  "scripts": {
+    "prepublish": "rollup -c rollup.config.js",
+    "test": "babel-node --plugins transform-es2015-modules-commonjs ./node_modules/.bin/tape -- __tests__/*-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UXtemple/jwt-couchdb.git"
+  },
+  "keywords": [
+    "users",
+    "usepages",
+    "uxtemple"
+  ],
+  "author": "Darío Javier Cravero <dario@uxtemple.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UXtemple/jwt-couchdb/issues"
+  },
+  "homepage": "https://github.com/UXtemple/jwt-couchdb#readme",
+  "dependencies": {
+    "couchdb-get-authorised-user-node": "^1.0.0",
+    "invariant": "^2.2.0",
+    "jsonwebtoken": "^5.7.0"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.5.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.5.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
+    "babel-plugin-transform-es2015-parameters": "^6.5.0",
+    "babel-plugin-transform-export-extensions": "^6.5.0",
+    "babel-plugin-transform-object-rest-spread": "^6.5.0",
+    "kneden": "^1.0.0",
+    "proxyquire": "^1.7.4",
+    "rollup": "^0.25.4",
+    "rollup-plugin-babel": "^2.4.0",
+    "sinon": "^1.17.3",
+    "tape": "^4.4.0"
+  }
+}
