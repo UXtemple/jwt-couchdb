@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/UXtemple/jwt-couchdb#readme",
   "dependencies": {
-    "couchdb-get-authorised-user-node": "^1.0.0",
+    "fetch-auth-node": "^1.0.0",
     "invariant": "^2.2.0",
     "jsonwebtoken": "^5.7.0"
   },

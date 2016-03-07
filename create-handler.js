@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import getAuthorisedUser from 'couchdb-get-authorised-user-node';
+import fetchAuth from 'fetch-auth-node';
 import HAS_VALID_AUTHORISATION_HEADER from './has-valid-authorisation-header';
 
 const POST = 'POST';
@@ -8,7 +8,7 @@ export default function createHandler({endpoint, options, secret}={}) {
   return async function handler(req, res) {
     if (req.method === POST && HAS_VALID_AUTHORISATION_HEADER.test(req.headers.authorization)) {
       try {
-        const { userCtx } = await getAuthorisedUser(endpoint, req.headers.authorization);
+        const { userCtx } = await fetchAuth(endpoint, req.headers.authorization);
         const token = sign(userCtx, secret, options);
 
         res.writeHead(200, {'Content-Type': 'application/json'});

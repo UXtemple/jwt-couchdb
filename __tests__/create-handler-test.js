@@ -9,9 +9,9 @@ authHeaderTest.returns(false);
 
 const endpoint = 'endpoint';
 const userCtx = 'userCtx';
-const getAuthorisedUser = stub();
-getAuthorisedUser.withArgs(endpoint, 'valid').returns({userCtx});
-getAuthorisedUser.withArgs(endpoint, 'valid token but wrong user').throws();
+const fetchAuth = stub();
+fetchAuth.withArgs(endpoint, 'valid').returns({userCtx});
+fetchAuth.withArgs(endpoint, 'valid token but wrong user').throws();
 
 const options = 'options';
 const secret = 'secret';
@@ -19,7 +19,7 @@ const token = 'token';
 const sign = stub().returns(token);
 
 const createHandler = proxyquire.noCallThru()('../create-handler', {
-  'couchdb-get-authorised-user-node': getAuthorisedUser,
+  'fetch-auth-node': fetchAuth,
   './has-valid-authorisation-header': {
     test: authHeaderTest
   },
@@ -79,7 +79,7 @@ test('#handler handles POST with valid auth header returns token', async t => {
 
   try {
     await handler({method: 'POST', headers: {authorization: 'valid'}}, res);
-    t.ok(getAuthorisedUser.args[0], [endpoint, 'valid'], 'authorises user');
+    t.ok(fetchAuth.args[0], [endpoint, 'valid'], 'authorises user');
     t.deepEquals(sign.args[0], [userCtx, secret, options], 'creates a token');
     t.deepEquals(res.writeHead.args[0], [200, {'Content-Type': 'application/json'}], 'responds with 200 and content-type application/json');
     t.ok(res.end.args[0][0], '"token"', 'ends the response with the token as a JSON string');
@@ -100,7 +100,7 @@ test('#handler handles POST with valid auth header but invalid credentials ends 
   try {
     await handler({method: 'POST', headers: {authorization: 'valid token but wrong user'}}, res);
 
-    t.ok(getAuthorisedUser.args[1], [endpoint, 'valid token but wrong user'], 'tries to authorise user');
+    t.ok(fetchAuth.args[1], [endpoint, 'valid token but wrong user'], 'tries to authorise user');
     t.ok(console.error.called, 'logs the error');
     t.equals(res.writeHead.args[0][0], 401, 'responds with 401');
     t.ok(res.end.called, 'ends the response');
