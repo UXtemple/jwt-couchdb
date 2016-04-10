@@ -17,7 +17,8 @@ export default function createHandler({endpoint, options, secret}={}) {
         roles = userCtx.roles;
 
         if (NEEDS_TO_REFRESH_ROLES.test(req.url)) {
-          roles = await fetchAuth(`${endpoint}/_users/org.couchdb.user:${name}`, req.headers.authorization).roles;
+          const nextUserCtx = await fetchAuth(`${endpoint}/_users/org.couchdb.user:${name}`, req.headers.authorization);
+          roles = nextUserCtx.roles;
         }
 
         const token = sign({name, roles}, secret, options);
