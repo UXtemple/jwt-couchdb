@@ -31,7 +31,7 @@ The config file is in JSON format, here's an example of all the options you can 
 
 ```
 {
-  "endpoint": "http://127.0.0.1:5984/_session",
+  "endpoint": "http://127.0.0.1:5984",
   "options": {
     "algorithms": ["HS256"],
     "expiresIn": "30s"
@@ -92,7 +92,7 @@ directly) from the web or node.
 
 ```js
 // login for the first time and get a token
-fetch('http://127.0.0.1:', {
+fetch('http://127.0.0.1:5985', {
   method: 'POST',
   headers: {
     // remember we need to use `btoa` to base64 our user and password credentials
@@ -133,7 +133,7 @@ the type of authentication
 ```
 var token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiU29tZSBVc2VyIiwicm9sZXMiOltdfQ.v4QRSYnAOen_NMBzlMER_Jrkep0xEz2kL09KscALC_c`;
 // renew token
-fetch('http://127.0.0.1:', {
+fetch('http://127.0.0.1:5985', {
   method: 'POST',
   headers: {
     Authorization: `Basic ${token}`
@@ -142,6 +142,13 @@ fetch('http://127.0.0.1:', {
   // do something with the new token :)
 });
 ```
+
+### Refreshing the roles
+
+Sometimes (particularly when renewing a token) it might come in handy to get the list of roles from
+the `_users` database in CouchDB again. To do so, query the service with `refresh-roles` at the end
+like: `http://127.0.0.1:5985/refresh-roles`.
+
 
 ## How do I blacklist a token?
 See [this as that's couch_jwt_auth](https://github.com/UXtemple/couch_jwt_auth#blacklisting-tokens)'s realm.

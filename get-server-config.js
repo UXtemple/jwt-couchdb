@@ -3,7 +3,7 @@ import invariant from 'invariant';
 
 export default function getServerConfig() {
   const {
-    endpoint = 'http://127.0.0.1:5984/_session',
+    endpoint = 'http://127.0.0.1:5984',
     options = {
       algorithms: ['HS256'],
       expiresIn: '5m'

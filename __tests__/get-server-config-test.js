@@ -33,7 +33,7 @@ test('#getServerConfig', t => {
   t.ok(invariant.firstCall, 'warns missing secret');
 
   t.deepEquals(getServerConfig(), {
-    endpoint: 'http://127.0.0.1:5984/_session',
+    endpoint: 'http://127.0.0.1:5984',
     options: {
       algorithms: ['HS256'],
       expiresIn: '5m'
